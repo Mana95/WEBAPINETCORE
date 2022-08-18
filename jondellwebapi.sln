@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31313.79
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jondellwebapi", "jondellwebapi\jondellwebapi.csproj", "{E0BE20FC-CE2C-4B20-A7A8-49A2776F4392}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E0BE20FC-CE2C-4B20-A7A8-49A2776F4392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0BE20FC-CE2C-4B20-A7A8-49A2776F4392}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0BE20FC-CE2C-4B20-A7A8-49A2776F4392}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0BE20FC-CE2C-4B20-A7A8-49A2776F4392}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50A32159-ADF7-4578-8A66-E8CB96601714}
+	EndGlobalSection
+EndGlobal
