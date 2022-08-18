@@ -32,19 +32,21 @@ namespace jondellwebapi.Controllers
             response = await _accRepo.SaveBalanceSheet(newBalance);
             return Ok(response);
            
-
+           // DateTimeTo
 
         }
 
         [HttpGet("getAll")]
-        public async Task<IActionResult> GetAllBalance()
+        public async Task<IActionResult> GetAll()
         {
-            return Ok("");
+            var serviceResponse = await _accRepo.GetAllBalance();
+            return Ok(serviceResponse);
         }
 
-        [HttpGet("getByDate")]
-        public async Task<IActionResult> GetByDateBalance()
+        [HttpPost("post")]
+        public async Task<IActionResult> GetByDateBalance(Balance balance)
         {
+            var serviceResponse = await _accRepo.GetBalanceByDateRange(balance.date);
             return Ok("");
         }
     }

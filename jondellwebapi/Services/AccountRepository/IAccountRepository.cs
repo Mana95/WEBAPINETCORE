@@ -9,9 +9,9 @@ namespace jondellwebapi.Services.AccountRepository
 {
    public interface IAccountRepository
     {
-        Task<ServiceResponse<List<Balance>>> GetAllBalance();
+        Task<ServiceResponse<List<GetBalanceDto>>> GetAllBalance();
 
-        Task<ServiceResponse<List<Balance>>> GetBalanceByDateRange();
+        Task<ServiceResponse<List<GetBalanceDto>>> GetBalanceByDateRange(DateTime date);
 
         Task<ServiceResponse<string>> SaveBalanceSheet(List<AddBalanceDto> balance);
 

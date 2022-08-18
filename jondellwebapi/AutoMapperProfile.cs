@@ -13,7 +13,7 @@ namespace webapi
         public AutoMapperProfile()
         {
             CreateMap<Balance, GetBalanceDto>();
-            CreateMap<Balance, AddBalanceDto>();
+            CreateMap<AddBalanceDto, Balance>();
 
         }
     }

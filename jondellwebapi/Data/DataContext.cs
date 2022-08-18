@@ -18,6 +18,10 @@ namespace webapi.Data
         {
             modelBuilder.Entity<User>()
                 .Property(user => user.Role).HasDefaultValue("User");
+
+            modelBuilder.Entity<Balance>()
+             .Property(balance => balance.date).HasDefaultValue(DateTime.Now);
+
         }
 
     }

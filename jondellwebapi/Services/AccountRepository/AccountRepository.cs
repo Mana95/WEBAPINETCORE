@@ -2,6 +2,8 @@
 using jondellwebapi.Dtos.Balance;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using webapi.Data;
@@ -18,36 +20,89 @@ namespace jondellwebapi.Services.AccountRepository
             _mapper = mapper;
             _context = context;
         }
-        public Task<ServiceResponse<List<Balance>>> GetAllBalance()
+        public async Task<ServiceResponse<List<GetBalanceDto>>> GetBalanceByDateRange(DateTime date)
         {
-            throw new NotImplementedException();
+            ServiceResponse<List<GetBalanceDto>> serviceResponse = new ServiceResponse<List<GetBalanceDto>>();
+            try
+            {
+                var _getResponse = _context.Balance.Where(s => s.date <= date);
+                var _mapBalanceList = (_getResponse.Select(c => _mapper.Map<GetBalanceDto>(c))).ToList(); ;
+                serviceResponse.Data = GetFilterBalanceData(_mapBalanceList);
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Message = ex.ToString();
+                serviceResponse.success = false;
+            }
+
+            return serviceResponse;
         }
 
-    
-
-
-        public Task<ServiceResponse<List<Balance>>> GetBalanceByDateRange()
+        public async Task<ServiceResponse<List<GetBalanceDto>>> GetAllBalance()
         {
-            throw new NotImplementedException();
+            ServiceResponse<List<GetBalanceDto>> serviceResponse = new ServiceResponse<List<GetBalanceDto>>();
+            try
+            {
+                var _mapDto = (_context.Balance.Select(c => _mapper.Map<GetBalanceDto>(c)).ToList());
+                serviceResponse.Data = GetFilterBalanceData(_mapDto);
+            }
+            catch(Exception ex)
+            {
+                serviceResponse.Message = ex.ToString();
+                serviceResponse.success = false;
+            }
+            return serviceResponse;
         }
 
         public async Task<ServiceResponse<string>> SaveBalanceSheet(List<AddBalanceDto> newBalance)
         {
             ServiceResponse<string> serviceResponse = new ServiceResponse<string>();
-            //    Account account = new 
-               // var balanceList = (newBalance.Select(c => _mapper.Map<AddBalanceDto>(c))).ToList();
-                foreach(var itm in newBalance)
+            try
             {
-                Balance balance = _mapper.Map<Balance>(itm);
-             //   var accout = await _context.Account.FirstOrDefault(c => c.id == itm.AccountId);
+                foreach (var itm in newBalance)
+                {
+                    Balance balance = _mapper.Map<Balance>(itm);
+                    balance.account = _context.Account.FirstOrDefault(c => c.id == itm.accountId);
 
-                await _context.Balance.AddAsync(balance);
-                await _context.SaveChangesAsync();
+                    await _context.Balance.AddAsync(balance);
+                    await _context.SaveChangesAsync();
+
+                }
             }
-           
-              
+            catch(Exception ex)
+            {
+                serviceResponse.success = false;
+                serviceResponse.Message = ex.ToString();
+            }
+                return serviceResponse;
         }
 
+
+        //filter data
+        private List<GetBalanceDto> GetFilterBalanceData(List<GetBalanceDto> balanceList )
+        {
+            var _balanceList = new List<Balance>();
+            var _accountList = _context.Account.Select(x => x).ToList();
+            foreach (var account in _accountList)
+            {
+                var _filterBalance = balanceList.Where(b => b.accountId == account.id).ToList();
+                if (_filterBalance != null)
+                {
+                    Balance Newbalance = new Balance();
+                    Newbalance.balance = "0";
+                    foreach (var balance in _filterBalance)
+                    {
+                        
+                        Newbalance.balance = (Int32.Parse(Newbalance.balance) + Int32.Parse(balance.balance)).ToString();
+                    }
+                    Newbalance.accountId = account.id;
+                    _balanceList.Add(Newbalance);
+                }
+            }
+            var _mapBalance = _balanceList.Select(c => _mapper.Map<GetBalanceDto>(c)).ToList();
+
+            return _mapBalance;
+        }
         
     }
 }

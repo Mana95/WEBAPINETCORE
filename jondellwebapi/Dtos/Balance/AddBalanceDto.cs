@@ -8,10 +8,10 @@ namespace jondellwebapi.Dtos.Balance
 {
     public class AddBalanceDto
     {
-        public string date { get; set; }
+        public DateTime date { get; set; }
         public string balance { get; set; }
 
-        public string AccountId { get; set; }
+        public string accountId { get; set; }
 
     }
 }
