@@ -14,7 +14,6 @@ namespace webapi.Models
 
         public byte[] PasswordSalt { get; set; }
 
-        //public List<Character> Characters { get; set; }
 
         [Required]
         public string Role { get; set; }

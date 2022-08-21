@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using webapi.Data;
 
 namespace jondellwebapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220820065043_convertBalance")]
+    partial class convertBalance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,13 +44,13 @@ namespace jondellwebapi.Migrations
                     b.Property<string>("accountId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<double>("balance")
-                        .HasColumnType("float");
+                    b.Property<int>("balance")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 8, 21, 20, 4, 38, 18, DateTimeKind.Local).AddTicks(4863));
+                        .HasDefaultValue(new DateTime(2022, 8, 20, 12, 20, 42, 824, DateTimeKind.Local).AddTicks(5699));
 
                     b.HasKey("id");
 

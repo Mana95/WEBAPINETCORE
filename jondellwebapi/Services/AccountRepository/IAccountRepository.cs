@@ -11,7 +11,7 @@ namespace jondellwebapi.Services.AccountRepository
     {
         Task<ServiceResponse<List<GetBalanceDto>>> GetAllBalance();
 
-        Task<ServiceResponse<List<GetBalanceDto>>> GetBalanceByDateRange(DateTime date);
+        Task<ServiceResponse<List<GetBalanceDto>>> GetBalanceByDateRange(string fromDate , string toDate);
 
         Task<ServiceResponse<string>> SaveBalanceSheet(List<AddBalanceDto> balance);
 

@@ -25,6 +25,7 @@ namespace webapi.Services.AuthRepository
             _context = context;
             _configuration = configuration;
         }
+
         public async Task<ServiceResponse<string>> Login(string username, string password)
         {
             ServiceResponse<string> response = new ServiceResponse<string>();
@@ -126,7 +127,6 @@ namespace webapi.Services.AuthRepository
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddMinutes(120),
                 SigningCredentials = creds,
-               
 
             };
 

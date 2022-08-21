@@ -11,7 +11,7 @@ namespace webapi.Models
         public int id { get; set; }
 
         public DateTime date { get; set; }
-        public string balance { get; set; }
+        public double balance { get; set; }
 
         public string accountId { get; set; }
         public Account account { get; set; }

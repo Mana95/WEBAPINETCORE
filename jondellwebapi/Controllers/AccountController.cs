@@ -30,6 +30,10 @@ namespace jondellwebapi.Controllers
         {
             ServiceResponse<string> response = new ServiceResponse<string>();
             response = await _accRepo.SaveBalanceSheet(newBalance);
+            if (!response.success)
+            {
+                throw new InvalidOperationException(response.Message);
+            }
             return Ok(response);
            
            // DateTimeTo
@@ -40,14 +44,24 @@ namespace jondellwebapi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var serviceResponse = await _accRepo.GetAllBalance();
+            if (!serviceResponse.success)
+            {
+                throw new InvalidOperationException(serviceResponse.Message);
+            }
             return Ok(serviceResponse);
         }
+      
 
-        [HttpPost("post")]
-        public async Task<IActionResult> GetByDateBalance(Balance balance)
+        [HttpGet("getByRange")]
+        public async Task<IActionResult> GetByDateBalance(string fromDate , string toDate)
         {
-            var serviceResponse = await _accRepo.GetBalanceByDateRange(balance.date);
-            return Ok("");
+
+            var serviceResponse = await _accRepo.GetBalanceByDateRange(fromDate , toDate);
+            if (!serviceResponse.success)
+            {
+                throw new InvalidOperationException(serviceResponse.Message);
+            }
+            return Ok(serviceResponse);
         }
     }
 }

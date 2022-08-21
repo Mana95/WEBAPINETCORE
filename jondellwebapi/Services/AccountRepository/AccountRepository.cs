@@ -20,12 +20,14 @@ namespace jondellwebapi.Services.AccountRepository
             _mapper = mapper;
             _context = context;
         }
-        public async Task<ServiceResponse<List<GetBalanceDto>>> GetBalanceByDateRange(DateTime date)
+        public async Task<ServiceResponse<List<GetBalanceDto>>> GetBalanceByDateRange(string fromDate, string toDate)
         {
             ServiceResponse<List<GetBalanceDto>> serviceResponse = new ServiceResponse<List<GetBalanceDto>>();
             try
             {
-                var _getResponse = _context.Balance.Where(s => s.date <= date);
+                DateTime _toDate = DateTime.ParseExact(toDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                DateTime _fromDate = DateTime.ParseExact(fromDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                var _getResponse = _context.Balance.Where(s =>   _fromDate <= s.date  && s.date <= _toDate);
                 var _mapBalanceList = (_getResponse.Select(c => _mapper.Map<GetBalanceDto>(c))).ToList(); ;
                 serviceResponse.Data = GetFilterBalanceData(_mapBalanceList);
             }
@@ -89,11 +91,11 @@ namespace jondellwebapi.Services.AccountRepository
                 if (_filterBalance != null)
                 {
                     Balance Newbalance = new Balance();
-                    Newbalance.balance = "0";
+                    Newbalance.balance = 0;
                     foreach (var balance in _filterBalance)
                     {
                         
-                        Newbalance.balance = (Int32.Parse(Newbalance.balance) + Int32.Parse(balance.balance)).ToString();
+                        Newbalance.balance = Newbalance.balance + balance.balance;
                     }
                     Newbalance.accountId = account.id;
                     _balanceList.Add(Newbalance);

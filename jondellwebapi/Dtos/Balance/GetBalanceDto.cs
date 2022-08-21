@@ -10,7 +10,7 @@ namespace jondellwebapi.Dtos.Balance
     {
         public string id { get; set; }
         public string date { get; set; }
-        public string balance { get; set; }
+        public double balance { get; set; }
 
  
         public string accountId { get; set; }
